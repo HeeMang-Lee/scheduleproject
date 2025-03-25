@@ -72,7 +72,9 @@ public class ScheduleRepositoryImpl implements ScheduleRepository{
 
     @Override
     public Optional<Schedule> findById(Long id) {
-        return Optional.empty();
+        String sql = "SELECT * FROM schedule WHERE id = ?";
+        List<Schedule> result = jdbcTemplate.query(sql,scheduleRowMapper,id);
+        return result.stream().findAny();
     }
 
     @Override
@@ -95,4 +97,17 @@ public class ScheduleRepositoryImpl implements ScheduleRepository{
                 rs.getTimestamp("modified_at").toLocalDateTime()
         );
     }
+
+    private final RowMapper<Schedule> scheduleRowMapper = (rs,rowNum) -> {
+        Long id = rs.getLong("id");
+        String exerciseDate = rs.getString("exercise_date");
+        String exercisesStr = rs.getString("exercises");
+        List<String> exercises = Arrays.asList(exercisesStr.split(","));
+        String writer = rs.getString("writer");
+        String password = rs.getString("password");
+        LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
+        LocalDateTime modifiedAt = rs.getTimestamp("modified_at").toLocalDateTime();
+
+        return  new Schedule(id,exerciseDate,exercises,writer,password,createdAt,modifiedAt);
+    };
 }

@@ -42,4 +42,27 @@ public class ScheduleServiceImpl implements ScheduleService {
         );
         return new ScheduleResponseDto(schedule);
     }
+
+    @Override
+    public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) {
+        Schedule existing = scheduleRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"해당 운동 일정이 존재하지 않습니다.")
+        );
+        if (!existing.getPassword().equals(requestDto.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "비밀번호가 일치하지 않습니다.");
+        }
+
+        Schedule updatedSchedule = new Schedule(
+                id,
+                requestDto.getExerciseDate(),
+                requestDto.getExercises(),
+                requestDto.getWriter(),
+                existing.getPassword(),
+                existing.getCreatedAt(),
+                LocalDateTime.now()
+        );
+
+        scheduleRepository.update(id, updatedSchedule);
+        return new ScheduleResponseDto((updatedSchedule));
+    }
 }

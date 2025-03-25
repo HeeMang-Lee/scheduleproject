@@ -8,9 +8,11 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import java.awt.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.List;
 
 @Repository
 public class ScheduleRepositoryImpl implements ScheduleRepository{
@@ -79,6 +81,16 @@ public class ScheduleRepositoryImpl implements ScheduleRepository{
 
     @Override
     public void update(Long id, Schedule schedule) {
+        String sql = "UPDATE schedule SET exercise_date = ?, exercises = ? , writer = ?, modified_at = ? WHERE id = ?";
+        String exerciseStr = String.join(",",schedule.getExercises());
+
+        jdbcTemplate.update(sql,
+                schedule.getExerciseDate(),
+                exerciseStr,
+                schedule.getWriter(),
+                Timestamp.valueOf(schedule.getModifiedAt()),
+                id
+        );
 
     }
 

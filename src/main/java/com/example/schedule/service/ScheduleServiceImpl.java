@@ -7,6 +7,8 @@ import com.example.schedule.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -24,5 +26,10 @@ public class ScheduleServiceImpl implements ScheduleService {
                 requestDto.getPassword(),now,now ) ;
 
         return scheduleRepository.save(schedule);
+    }
+
+    @Override
+    public List<ScheduleResponseDto> getAllSchedules(String modifiedAt, String writer) {
+        return scheduleRepository.findAll(modifiedAt,writer);
     }
 }

@@ -3,16 +3,14 @@ package com.example.schedule.repository;
 import com.example.schedule.dto.ScheduleResponseDto;
 import com.example.schedule.entity.Schedule;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 public class ScheduleRepositoryImpl implements ScheduleRepository{
@@ -54,9 +52,22 @@ public class ScheduleRepositoryImpl implements ScheduleRepository{
     }
 
     @Override
-    public List<Schedule> findAll(String modifiedAt, String writer) {
+    public List<ScheduleResponseDto> findAll(String modifiedAt, String writer) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM schedule WHERE 1=1");
+        List<Object> params = new ArrayList<>();
 
-        return List.of();
+        if (modifiedAt != null && !modifiedAt.isBlank()) {
+            sql.append(" AND DATE(modified_at) = ?");
+            params.add(modifiedAt);
+        }
+        if (writer != null && !writer.isBlank()) {
+            sql.append(" AND writer = ?");
+            params.add(writer);
+        }
+
+        sql.append(" ORDER BY modified_at DESC");
+
+        return jdbcTemplate.query(sql.toString(),scheduleResponseDtoRowMapper(),params.toArray());
     }
 
     @Override
@@ -72,5 +83,16 @@ public class ScheduleRepositoryImpl implements ScheduleRepository{
     @Override
     public void delete(Long id) {
 
+    }
+
+    private RowMapper<ScheduleResponseDto> scheduleResponseDtoRowMapper() {
+        return (rs, rowNum) -> new ScheduleResponseDto(
+                rs.getLong("id"),
+                rs.getString("exercise_date"),
+                Arrays.asList(rs.getString("exercises").split(",")),
+                rs.getString("writer"),
+                rs.getTimestamp("created_at").toLocalDateTime(),
+                rs.getTimestamp("modified_at").toLocalDateTime()
+        );
     }
 }

@@ -10,5 +10,6 @@ public interface ScheduleService {
     List<ScheduleResponseDto> getAllSchedules(String modifiedAt,String writer);
     ScheduleResponseDto getSchedule(Long id);
     ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto);
+    void deleteSchedule(Long id, String password);
 
 }

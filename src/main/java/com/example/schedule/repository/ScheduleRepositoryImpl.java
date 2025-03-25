@@ -96,7 +96,8 @@ public class ScheduleRepositoryImpl implements ScheduleRepository{
 
     @Override
     public void delete(Long id) {
-
+        String sql = "DELETE FROM schedule WHERE id = ?";
+        jdbcTemplate.update(sql,id);
     }
 
     private RowMapper<ScheduleResponseDto> scheduleResponseDtoRowMapper() {

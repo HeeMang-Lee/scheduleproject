@@ -65,4 +65,16 @@ public class ScheduleServiceImpl implements ScheduleService {
         scheduleRepository.update(id, updatedSchedule);
         return new ScheduleResponseDto((updatedSchedule));
     }
+
+    @Override
+    public void deleteSchedule(Long id, String password) {
+        Schedule existing = scheduleRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "해당 운동 일정이 존재하지 않습니다.")
+        );
+        if (!existing.getPassword().equals(password)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "비밀번호가 일치하지 않습니다.");
+        }
+
+        scheduleRepository.delete(id);
+    }
 }

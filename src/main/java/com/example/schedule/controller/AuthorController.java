@@ -4,6 +4,7 @@ import com.example.schedule.dto.AuthorRequestDto;
 import com.example.schedule.dto.AuthorResponseDto;
 import com.example.schedule.service.AuthorService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,18 +12,12 @@ import org.springframework.web.bind.annotation.*;
  * REST 컨트롤러 클래스 - 작성자(Author) 관련 API를 처리합니다.
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/authors")
 public class AuthorController {
 
     private final AuthorService authorService;
-    /**
-     * AuthorController 생성자
-     *
-     * @param authorService 작성자 관련 비즈니스 로직을 처리하는 서비스
-     */
-    public AuthorController(AuthorService authorService) {
-        this.authorService = authorService;
-    }
+
     /**
      * 작성자 등록 API
      *

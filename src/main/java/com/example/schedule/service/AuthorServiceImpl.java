@@ -4,6 +4,7 @@ import com.example.schedule.dto.AuthorRequestDto;
 import com.example.schedule.dto.AuthorResponseDto;
 import com.example.schedule.entity.Author;
 import com.example.schedule.repository.AuthorRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,17 +14,11 @@ import java.time.LocalDateTime;
  * {@link AuthorService} 구현체로 작성자 등록 및 조회 로직을 처리합니다.
  */
 @Service
+@RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
-    /**
-     * 생성자
-     *
-     * @param authorRepository 작성자 저장소
-     */
-    public AuthorServiceImpl(AuthorRepository authorRepository) {
-        this.authorRepository = authorRepository;
-    }
+
     /**
      * 작성자 등록을 처리합니다.
      * 이메일 중복을 검사하고, 중복 시 400 예외를 반환합니다.

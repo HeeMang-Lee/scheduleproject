@@ -4,6 +4,7 @@ import com.example.schedule.dto.ScheduleRequestDto;
 import com.example.schedule.dto.ScheduleResponseDto;
 import com.example.schedule.service.ScheduleService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,18 +15,12 @@ import java.util.Map;
  * REST 컨트롤러 클래스 - 운동 일정(Schedule) 관련 API를 처리합니다.
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/schedules")
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
-    /**
-     * ScheduleController 생성자
-     *
-     * @param scheduleService 운동 일정 관련 비즈니스 로직을 처리하는 서비스
-     */
-    public ScheduleController(ScheduleService scheduleService) {
-        this.scheduleService = scheduleService;
-    }
+
     /**
      * 운동 일정 생성 API
      *

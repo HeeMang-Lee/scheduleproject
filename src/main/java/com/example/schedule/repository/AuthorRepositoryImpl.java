@@ -1,6 +1,7 @@
 package com.example.schedule.repository;
 
 import com.example.schedule.entity.Author;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -16,17 +17,11 @@ import java.util.Optional;
  * {@link AuthorRepository}의 구현체로, JDBC를 사용하여 작성자 정보를 저장 및 조회합니다.
  */
 @Repository
+@RequiredArgsConstructor
 public class AuthorRepositoryImpl implements AuthorRepository{
 
     private final JdbcTemplate jdbcTemplate;
-    /**
-     * 생성자
-     *
-     * @param jdbcTemplate 스프링 JDBC 템플릿
-     */
-    public AuthorRepositoryImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+
     /**
      * 작성자 정보를 DB에 저장합니다.
      * SimpleJdbcInsert를 사용하여 자동 생성되는 ID 값을 반환받습니다.

@@ -3,6 +3,7 @@ package com.example.schedule.repository;
 import com.example.schedule.dto.AuthorResponseDto;
 import com.example.schedule.dto.ScheduleResponseDto;
 import com.example.schedule.entity.Schedule;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -17,17 +18,11 @@ import java.util.List;
  * {@link ScheduleRepository}의 구현체로, JDBC를 사용하여 운동 일정을 저장, 조회, 수정, 삭제합니다.
  */
 @Repository
+@RequiredArgsConstructor
 public class ScheduleRepositoryImpl implements ScheduleRepository{
 
     private final JdbcTemplate jdbcTemplate;
-    /**
-     * 생성자
-     *
-     * @param jdbcTemplate Spring JDBC Template
-     */
-    public ScheduleRepositoryImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+
     /**
      * 운동 일정을 저장하고, 생성된 ID를 포함한 DTO를 반환합니다.
      *

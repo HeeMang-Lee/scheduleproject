@@ -7,32 +7,24 @@ import com.example.schedule.entity.Author;
 import com.example.schedule.entity.Schedule;
 import com.example.schedule.repository.AuthorRepository;
 import com.example.schedule.repository.ScheduleRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 /**
  * {@link ScheduleService} 구현체로, 운동 일정 생성, 조회, 수정, 삭제 등의 비즈니스 로직을 담당합니다.
  */
 @Service
+@RequiredArgsConstructor
 public class ScheduleServiceImpl implements ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final AuthorRepository authorRepository;
-    /**
-     * 생성자
-     *
-     * @param scheduleRepository 일정 저장소
-     * @param authorRepository   작성자 저장소
-     */
-    public ScheduleServiceImpl(ScheduleRepository scheduleRepository, AuthorRepository authorRepository) {
-        this.scheduleRepository = scheduleRepository;
-        this.authorRepository = authorRepository;
-    }
+
     /**
      * 새로운 운동 일정을 저장합니다.
      * 작성자 ID 유효성 검사를 수행하며, 저장 후 DTO 형태로 반환합니다.

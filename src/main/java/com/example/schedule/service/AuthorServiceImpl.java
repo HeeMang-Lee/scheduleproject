@@ -7,6 +7,7 @@ import com.example.schedule.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -26,6 +27,7 @@ public class AuthorServiceImpl implements AuthorService {
      * @param requestDto 작성자 등록 요청 DTO
      * @return 생성된 작성자 응답 DTO
      */
+    @Transactional
     @Override
     public AuthorResponseDto createAuthor(AuthorRequestDto requestDto) {
         if (authorRepository.findByEmail(requestDto.getEmail()).isPresent()) {

@@ -10,6 +10,7 @@ import com.example.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
@@ -32,6 +33,7 @@ public class ScheduleServiceImpl implements ScheduleService {
      * @param requestDto 일정 등록 요청 DTO
      * @return 생성된 일정 응답 DTO
      */
+    @Transactional
     @Override
     public ScheduleResponseDto saveSchedule(ScheduleRequestDto requestDto) {
         Author author = authorRepository.findById(requestDto.getAuthorId())
@@ -104,6 +106,7 @@ public class ScheduleServiceImpl implements ScheduleService {
      * @param requestDto 수정 요청 DTO
      * @return 수정된 일정 응답 DTO
      */
+    @Transactional
     @Override
     public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) {
         Schedule existing = scheduleRepository.findEntityById(id)
@@ -145,6 +148,7 @@ public class ScheduleServiceImpl implements ScheduleService {
      * @param id       일정 ID
      * @param password 요청 시 전달된 비밀번호
      */
+    @Transactional
     @Override
     public void deleteSchedule(Long id, String password) {
         Schedule existing = scheduleRepository.findByIdForDelete(id)

@@ -8,8 +8,10 @@ import java.util.Optional;
 
 public interface ScheduleRepository {
     ScheduleResponseDto save(Schedule schedule);
-    List<ScheduleResponseDto> findAll(String modifiedAt, String writer);
-    Optional<Schedule> findById(Long id);
-    void update(Long id, Schedule schedule);
+    List<ScheduleResponseDto> findAll(String modifiedAt, Long authorId);
+    Optional<ScheduleResponseDto> findById(Long id);
+    Optional<Schedule> findEntityById(Long id);
+    void update(Schedule schedule);
+    Optional<Schedule> findByIdForDelete(Long id);
     void delete(Long id);
 }

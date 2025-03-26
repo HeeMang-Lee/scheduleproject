@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ScheduleService {
     ScheduleResponseDto saveSchedule(ScheduleRequestDto requestDto);
-    List<ScheduleResponseDto> getAllSchedules(String modifiedAt,String writer);
+    List<ScheduleResponseDto> getAllSchedules(String modifiedAt,Long id);
     ScheduleResponseDto getSchedule(Long id);
     ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto);
     void deleteSchedule(Long id, String password);

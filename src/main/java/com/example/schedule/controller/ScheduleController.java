@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/schedules")
@@ -28,9 +29,9 @@ public class ScheduleController {
     @GetMapping
     public ResponseEntity<List<ScheduleResponseDto>> getAllSchedules(
             @RequestParam(required = false) String modifiedAt,
-            @RequestParam(required = false) String writer
+            @RequestParam(required = false) Long authorId
     ) {
-        List<ScheduleResponseDto> response = scheduleService.getAllSchedules(modifiedAt,writer);
+        List<ScheduleResponseDto> response = scheduleService.getAllSchedules(modifiedAt,authorId);
         return ResponseEntity.ok(response);
     }
 
@@ -52,9 +53,10 @@ public class ScheduleController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSchedule(
             @PathVariable Long id,
-            @RequestBody @Valid ScheduleRequestDto requestDto
+            @RequestBody @Valid Map<String, String> body
     ) {
-        scheduleService.deleteSchedule(id,requestDto.getPassword());
+        String password = body.get("password");
+        scheduleService.deleteSchedule(id,password);
         return ResponseEntity.noContent().build();
     }
 

@@ -190,8 +190,8 @@ URL: /api/schedules/{id}
 
 ## 6 . 작성자 등록 
 
-Method: DELETE  
-URL: /api/schedules/{id}  
+Method: POST  
+URL: /api/authors
 필수값: name,email  
   
 요청 본문 예시  

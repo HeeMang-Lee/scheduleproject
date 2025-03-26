@@ -9,18 +9,18 @@ public class AuthorResponseDto {
     private final Long id;
     private final String name;
     private final String email;
-    private final LocalDateTime createdAt;
-    private final LocalDateTime modifiedAt;
 
-    public AuthorResponseDto(Long id, String name, String email, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+
+    public AuthorResponseDto(Long id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
+
     }
 
     public AuthorResponseDto(Author author) {
-        this(author.getId(), author.getName(), author.getEmail(), author.getCreatedAt(),author.getModifiedAt());
+        this.id = author.getId();
+        this.name = author.getName();
+        this.email = author.getEmail();
     }
 }
